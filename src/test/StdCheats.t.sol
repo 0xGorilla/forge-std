@@ -3,6 +3,10 @@ pragma solidity >=0.6.0 <0.9.0;
 
 import "../Test.sol";
 
+interface IAny {
+    function doSomething() external;
+}
+
 contract StdCheatsTest is Test {
     Bar test;
     
@@ -101,6 +105,15 @@ contract StdCheatsTest is Test {
             // actually retrieve the code, this needs assembly
             extcodecopy(who, add(o_code, 0x20), 0, size)
         }
+    }
+
+    function testLabel(address who) public {
+        assertEq(label(who, 'My alias'), who);
+    }
+
+    function testMockContract(address who) public {
+        // this should not revert, since who should be etched
+        IAny(mockContract(who, 'My alias')).doSomething();
     }
 }
 

@@ -142,6 +142,16 @@ abstract contract Test is DSTest {
             addr := create(0, add(bytecode, 0x20), mload(bytecode))
         }
     }
+
+    function label(address who, string memory name) internal returns (address) {
+        vm.label(who, name);
+        return who;
+    }
+
+    function mockContract(address who, string memory name) internal returns (address) {
+        vm.etch(who, new bytes(0x1));
+        return label(who, name);
+    }
 }
 
 
